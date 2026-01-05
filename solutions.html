@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解决方案 - 太铭科技</title>
+    <meta name="description" content="太铭科技行业解决方案，涵盖5G通信、国防军工、数据中心、智能电网等关键领域，提供专业的时频同步解决方案。">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-dark: #1a2332;
+            --secondary-gray: #8892a0;
+            --accent-gold: #e6b35a;
+            --bg-dark: #0f1419;
+            --text-light: #e1e8ef;
+            --text-gray: #8892a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        /* Navigation */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 20, 25, 0.8);
+            border-bottom: 1px solid rgba(136, 146, 160, 0.1);
+        }
+        
+        /* Glass Effect */
+        .glass-card {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 16px;
+        }
+        
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Tech Grid Background */
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(136, 146, 160, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136, 146, 160, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Scenario Simulator */
+        .scenario-simulator {
+            background: rgba(26, 35, 50, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.2);
+            border-radius: 20px;
+            min-height: 500px;
+        }
+        
+        .network-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), #d4a04a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .network-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(230, 179, 90, 0.5);
+        }
+        
+        .network-node.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        
+        .network-connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            animation: pulse-line 2s infinite;
+        }
+        
+        @keyframes pulse-line {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        /* Performance Dashboard */
+        .performance-dashboard {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 12px;
+        }
+        
+        .metric-gauge {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+        }
+        
+        /* Solution Cards */
+        .solution-card {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(230, 179, 90, 0.3);
+        }
+        
+        /* Scenario Selector */
+        .scenario-selector {
+            display: flex;
+            background: rgba(26, 35, 50, 0.4);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 2rem;
+        }
+        
+        .scenario-selector button {
+            flex: 1;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-gray);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scenario-selector button.active {
+            background: var(--accent-gold);
+            color: #000;
+            font-weight: 600;
+        }
+        
+        /* Case Study Timeline */
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 16px;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body class="tech-grid">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                        <span class="text-black font-bold text-lg">T</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-serif font-bold text-white">太铭科技</h1>
+                        <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">首页</a>
+                    <a href="products.html" class="text-gray-300 hover:text-white transition-colors">产品中心</a>
+                    <a href="solutions.html" class="text-white font-medium border-b-2 border-yellow-400 pb-1">解决方案</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">关于我们</a>
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                        联系咨询
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6">行业解决方案</h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                基于深度行业理解，为关键基础设施提供专业的时频同步解决方案
+            </p>
+        </div>
+    </section>
+
+    <!-- Scenario Simulator -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">应用场景模拟器</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    交互式体验不同时频产品在各行业中的应用部署，点击网络节点查看详细信息
+                </p>
+            </div>
+            
+            <!-- Scenario Selector -->
+            <div class="scenario-selector">
+                <button class="scenario-btn active" data-scenario="5g">5G通信网络</button>
+                <button class="scenario-btn" data-scenario="defense">国防军工</button>
+                <button class="scenario-btn" data-scenario="datacenter">数据中心</button>
+                <button class="scenario-btn" data-scenario="power">智能电网</button>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Network Topology -->
+                <div class="lg:col-span-2">
+                    <div class="scenario-simulator p-6 relative" id="network-topology">
+                        <!-- 网络节点将通过JavaScript动态生成 -->
+                        <div class="text-center text-gray-400 absolute inset-0 flex items-center justify-center">
+                            <div>
+                                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                                </svg>
+                                <p>正在加载网络拓扑图...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Dashboard -->
+                <div class="space-y-6">
+                    <div class="performance-dashboard p-6">
+                        <h3 class="text-xl font-bold mb-6">实时性能监控</h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center">
+                                <div class="metric-gauge" id="sync-precision-gauge"></div>
+                                <div class="text-sm text-gray-400 mt-2">同步精度</div>
+                                <div class="text-lg font-bold text-yellow-400" id="sync-precision-value">±10ns</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="metric-gauge" id="network-delay-gauge"></div>
+                                <div class="text-sm text-gray-400 mt-2">网络延迟</div>
+                                <div class="text-lg font-bold text-green-400" id="network-delay-value"><1ms</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="metric-gauge" id="availability-gauge"></div>
+                                <div class="text-sm text-gray-400 mt-2">可用性</div>
+                                <div class="text-lg font-bold text-blue-400" id="availability-value">99.99%</div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="metric-gauge" id="temperature-gauge"></div>
+                                <div class="text-sm text-gray-400 mt-2">工作温度</div>
+                                <div class="text-lg font-bold text-purple-400" id="temperature-value">25°C</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Node Info Panel -->
+                    <div class="glass-card p-6" id="node-info-panel">
+                        <h3 class="text-lg font-bold mb-4">节点信息</h3>
+                        <div class="text-center text-gray-400 py-8">
+                            <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p>点击网络节点查看详细信息</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industry Solutions -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">行业解决方案</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    基于深度行业理解，我们为不同领域提供定制化的时频同步解决方案
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- 5G Communication -->
+                <div class="solution-card p-8 hover-lift" id="5g">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">5G通信网络</h3>
+                            <p class="text-gray-400">高精度时频同步解决方案</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">技术挑战</h4>
+                                <p class="text-gray-400 text-sm">5G网络需要±65ns的时间同步精度，TDD制式要求更严格的时隙对齐</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">解决方案</h4>
+                                <p class="text-gray-400 text-sm">采用TMM4733插针式PTP模块，提供±10ns授时精度，支持IEEE1588v2协议</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">应用效果</h4>
+                                <p class="text-gray-400 text-sm">同步精度提升80%，网络时隙利用率提高15%，用户体验显著改善</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            了解更多
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors" onclick="showCaseStudy('5g')">
+                            成功案例
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Defense -->
+                <div class="solution-card p-8 hover-lift" id="defense">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">国防军工</h3>
+                            <p class="text-gray-400">高可靠性国产化时频方案</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">技术挑战</h4>
+                                <p class="text-gray-400 text-sm">极端环境条件，高可靠性要求，100%国产化需求</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">解决方案</h4>
+                                <p class="text-gray-400 text-sm">TM33B全国产编解码模块，-55℃~105℃超宽温工作范围</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">应用效果</h4>
+                                <p class="text-gray-400 text-sm">实现100%自主可控，通过军工级认证，满足战时需求</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            了解更多
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors" onclick="showCaseStudy('defense')">
+                            成功案例
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Data Center -->
+                <div class="solution-card p-8 hover-lift" id="datacenter">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">数据中心</h3>
+                            <p class="text-gray-400">大规模分布式系统同步</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">技术挑战</h4>
+                                <p class="text-gray-400 text-sm">数千台服务器需要微秒级时间同步，确保数据一致性</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">解决方案</h4>
+                                <p class="text-gray-400 text-sm">TM45高性能时钟模块，1.5μs/24hrs优异保持能力</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">应用效果</h4>
+                                <p class="text-gray-400 text-sm">数据一致性提升95%，分布式事务处理效率提高40%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            了解更多
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors" onclick="showCaseStudy('datacenter')">
+                            成功案例
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Smart Grid -->
+                <div class="solution-card p-8 hover-lift" id="power">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-xl flex items-center justify-center mr-4">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">智能电网</h3>
+                            <p class="text-gray-400">广域测量保护控制系统</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">技术挑战</h4>
+                                <p class="text-gray-400 text-sm">广域电网同步测量，故障定位精度要求高</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">解决方案</h4>
+                                <p class="text-gray-400 text-sm">TM33B编解码模块实现IRIG-B信号与1PPS+TOD灵活转换</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <span class="text-black text-xs font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">应用效果</h4>
+                                <p class="text-gray-400 text-sm">故障定位精度提升至±100米，电网稳定性提高30%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            了解更多
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors" onclick="showCaseStudy('power')">
+                            成功案例
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Cases Timeline -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">成功案例</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    我们的时频解决方案已在多个关键项目中成功部署，获得客户高度认可
+                </p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-700 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">5G基站同步项目</h3>
+                                <p class="text-gray-400">某省级运营商 | 2024年</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            部署TMM4733插针式PTP模块，实现全省5000+基站的精确时间同步，同步精度达到±10ns，完全满足5G网络时隙对齐要求。
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">5000+</div>
+                                <div class="text-xs text-gray-400">基站覆盖</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">±10ns</div>
+                                <div class="text-xs text-gray-400">同步精度</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">99.99%</div>
+                                <div class="text-xs text-gray-400">可用性</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-700 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">军工时频系统</h3>
+                                <p class="text-gray-400">某军工研究所 | 2023年</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            采用TM33B全国产编解码模块，在极端环境条件下实现可靠的时间同步，通过军工级认证，满足战时需求。
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">100%</div>
+                                <div class="text-xs text-gray-400">国产化率</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">-55~105℃</div>
+                                <div class="text-xs text-gray-400">工作温度</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">军工级</div>
+                                <div class="text-xs text-gray-400">认证</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">智能电网同步</h3>
+                                <p class="text-gray-400">国家电网某省公司 | 2024年</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-4">
+                            部署TM33B编解码模块，实现200+变电站的时间统一，为广域保护控制提供可靠的时间基准。
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">200+</div>
+                                <div class="text-xs text-gray-400">变电站</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">±100米</div>
+                                <div class="text-xs text-gray-400">定位精度</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-yellow-400">30%</div>
+                                <div class="text-xs text-gray-400">稳定性提升</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="glass-card p-12">
+                <h2 class="text-4xl font-serif font-bold mb-6">开启您的时频同步之旅</h2>
+                <p class="text-xl text-gray-400 mb-8">
+                    我们的技术专家将为您提供定制化的行业解决方案
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-medium text-lg transition-all" onclick="TaimingTech.showContactModal()">
+                        获取解决方案
+                    </button>
+                    <button class="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black px-8 py-4 rounded-lg font-medium text-lg transition-all">
+                        下载白皮书
+                    </button>
+                </div>
+                
+                <div class="text-sm text-gray-400">
+                    <p>专业技术团队 · 7×24小时支持 · 定制化开发服务</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                            <span class="text-black font-bold text-lg">T</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-serif font-bold">太铭科技</h3>
+                            <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        专注于高精度时频技术，为关键基础设施提供精准时间同步解决方案。
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">产品中心</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="products.html#clock-modules" class="hover:text-white">时钟模块系列</a></li>
+                        <li><a href="products.html#irig-b" class="hover:text-white">IRIG-B编解码</a></li>
+                        <li><a href="products.html#network-sync" class="hover:text-white">网络同步模块</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">解决方案</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#5g" class="hover:text-white">5G通信网络</a></li>
+                        <li><a href="#defense" class="hover:text-white">国防军工</a></li>
+                        <li><a href="#datacenter" class="hover:text-white">数据中心</a></li>
+                        <li><a href="#power" class="hover:text-white">智能电网</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>电话: 400-888-8888</li>
+                        <li>邮箱: info@taiming.com</li>
+                        <li>地址: 北京市海淀区中关村</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 太鸣科技. 保留所有权利. | 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script src="solutions.js"></script>
+</body>
+</html>

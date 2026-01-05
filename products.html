@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品中心 - 太铭科技</title>
+    <meta name="description" content="太铭科技产品中心，提供时钟模块、IRIG-B编解码模块、网络同步模块等全系列时频产品，支持智能选型和参数对比。">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-dark: #1a2332;
+            --secondary-gray: #8892a0;
+            --accent-gold: #e6b35a;
+            --bg-dark: #0f1419;
+            --text-light: #e1e8ef;
+            --text-gray: #8892a0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .font-serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        /* Navigation */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(15, 20, 25, 0.8);
+            border-bottom: 1px solid rgba(136, 146, 160, 0.1);
+        }
+        
+        /* Glass Effect */
+        .glass-card {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 16px;
+        }
+        
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Tech Grid Background */
+        .tech-grid {
+            background-image: 
+                linear-gradient(rgba(136, 146, 160, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(136, 146, 160, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Product Selector */
+        .product-selector {
+            background: rgba(26, 35, 50, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.2);
+            border-radius: 20px;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: rgba(230, 179, 90, 0.1);
+            border-bottom: 1px solid rgba(136, 146, 160, 0.2);
+        }
+        
+        .comparison-table td {
+            border-bottom: 1px solid rgba(136, 146, 160, 0.1);
+        }
+        
+        /* Product Cards */
+        .product-card {
+            background: rgba(26, 35, 50, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(136, 146, 160, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(230, 179, 90, 0.3);
+        }
+        
+        .product-card.selected {
+            border-color: rgba(230, 179, 90, 0.6);
+            box-shadow: 0 0 20px rgba(230, 179, 90, 0.2);
+        }
+        
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            background: rgba(26, 35, 50, 0.4);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-nav button {
+            flex: 1;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-gray);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-nav button.active {
+            background: var(--accent-gold);
+            color: #000;
+            font-weight: 600;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .form-select,
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(26, 35, 50, 0.6);
+            border: 1px solid rgba(136, 146, 160, 0.3);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus,
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 3px rgba(230, 179, 90, 0.1);
+        }
+        
+        /* Match Score */
+        .match-score {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .match-score.medium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .match-score.low {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+    </style>
+</head>
+<body class="tech-grid">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                        <span class="text-black font-bold text-lg">T</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-serif font-bold text-white">太铭科技</h1>
+                        <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">首页</a>
+                    <a href="products.html" class="text-white font-medium border-b-2 border-yellow-400 pb-1">产品中心</a>
+                    <a href="solutions.html" class="text-gray-300 hover:text-white transition-colors">解决方案</a>
+                    <a href="about.html" class="text-gray-300 hover:text-white transition-colors">关于我们</a>
+                    <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                        联系咨询
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6">产品中心</h1>
+            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                智能选型工具帮您快速找到最适合的时频产品，支持详细参数对比和技术咨询
+            </p>
+        </div>
+    </section>
+
+    <!-- Product Selector Tool -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="product-selector p-8 mb-12">
+                <h2 class="text-3xl font-bold mb-8 text-center">智能产品选型工具</h2>
+                
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Input Form -->
+                    <div class="lg:col-span-1">
+                        <h3 class="text-xl font-bold mb-6">您的需求</h3>
+                        <form id="product-selector-form">
+                            <div class="form-group">
+                                <label class="form-label">应用场景</label>
+                                <select class="form-select" id="application-scenario">
+                                    <option value="">请选择应用场景</option>
+                                    <option value="5g">5G通信网络</option>
+                                    <option value="defense">国防军工</option>
+                                    <option value="datacenter">数据中心</option>
+                                    <option value="power">智能电网</option>
+                                    <option value="other">其他应用</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">授时精度要求</label>
+                                <select class="form-select" id="precision-requirement">
+                                    <option value="">请选择精度要求</option>
+                                    <option value="ultra-high">±10ns (超高精度)</option>
+                                    <option value="high">±30ns (高精度)</option>
+                                    <option value="medium">±50ns (中精度)</option>
+                                    <option value="standard">≤1ms (标准精度)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">工作温度范围</label>
+                                <select class="form-select" id="temperature-range">
+                                    <option value="">请选择温度范围</option>
+                                    <option value="ultra-wide">-55℃~105℃ (超宽温)</option>
+                                    <option value="wide">-40℃~85℃ (宽温)</option>
+                                    <option value="standard">0℃~70℃ (标准)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">尺寸限制</label>
+                                <select class="form-select" id="size-constraint">
+                                    <option value="">请选择尺寸要求</option>
+                                    <option value="ultra-compact">超小型 (≤20×20mm)</option>
+                                    <option value="compact">紧凑型 (≤50×50mm)</option>
+                                    <option value="standard">标准型 (≤70×70mm)</option>
+                                    <option value="no-limit">无特殊限制</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">功耗要求</label>
+                                <select class="form-select" id="power-requirement">
+                                    <option value="">请选择功耗要求</option>
+                                    <option value="ultra-low"><0.5W (超低功耗)</option>
+                                    <option value="low"><3.5W (低功耗)</option>
+                                    <option value="standard"><5W (标准功耗)</option>
+                                    <option value="no-limit">无特殊限制</option>
+                                </select>
+                            </div>
+                            
+                            <button type="button" class="w-full bg-yellow-500 hover:bg-yellow-600 text-black py-3 px-6 rounded-lg font-medium transition-colors" onclick="runProductSelector()">
+                                智能推荐
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Recommendation Results -->
+                    <div class="lg:col-span-2">
+                        <h3 class="text-xl font-bold mb-6">推荐结果</h3>
+                        <div id="recommendation-results" class="space-y-4">
+                            <div class="text-center text-gray-400 py-12">
+                                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                                <p>请填写您的需求，我们将为您推荐最适合的产品</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="all">全部产品</button>
+                <button class="tab-btn" data-tab="clock-modules">时钟模块</button>
+                <button class="tab-btn" data-tab="irig-b">IRIG-B编解码</button>
+                <button class="tab-btn" data-tab="network-sync">网络同步</button>
+            </div>
+            
+            <!-- Product Comparison Tool -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold">产品对比</h2>
+                    <button id="compare-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        对比选中产品 (<span id="compare-count">0</span>/3)
+                    </button>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">选择最多3个产品进行详细参数对比</p>
+            </div>
+            
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Clock Modules -->
+                <div class="product-card p-6" data-category="clock-modules" data-product="tm22">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TM22</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tm22">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">紧凑型时钟模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">1PPS锁定精度</span>
+                            <span class="text-yellow-400 font-medium">±15ns</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">保持能力</span>
+                            <span class="text-yellow-400 font-medium">30μs/24hrs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">20.0×20.0×12.7mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">工作温度</span>
+                            <span class="text-yellow-400 font-medium">-40℃~85℃</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card p-6" data-category="clock-modules" data-product="tm45">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TM45</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tm45">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">高性能时钟模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">1PPS锁定精度</span>
+                            <span class="text-yellow-400 font-medium">±15ns</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">保持能力</span>
+                            <span class="text-yellow-400 font-medium">1.5μs/24hrs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">40.6×35.3×12.7mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">工作温度</span>
+                            <span class="text-yellow-400 font-medium">-40℃~85℃</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- IRIG-B Modules -->
+                <div class="product-card p-6" data-category="irig-b" data-product="tm33b">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TM33B</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tm33b">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">IRIG-B(DC)编解码模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">功能</span>
+                            <span class="text-yellow-400 font-medium">BDC↔1PPS+TOD</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">30×30×3.5mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">工作温度</span>
+                            <span class="text-yellow-400 font-medium">-55℃~105℃</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">国产化</span>
+                            <span class="text-yellow-400 font-medium">100%全国产</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Network Sync Modules -->
+                <div class="product-card p-6" data-category="network-sync" data-product="tmm4733">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TMM4733</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tmm4733">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">插针式PTP模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">PTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">±10ns</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">NTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">≤1ms</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">70×46×16.6mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">功耗</span>
+                            <span class="text-yellow-400 font-medium">5V/<3.5W</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card p-6" data-category="network-sync" data-product="tmm4330">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TMM4330</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tmm4330">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">表贴式PTP模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">PTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">±30ns</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">NTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">≤1ms</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">43×30×3.5mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">功耗</span>
+                            <span class="text-yellow-400 font-medium"><0.5W</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="product-card p-6" data-category="network-sync" data-product="tmm2000">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold">TMM2000</h3>
+                        <input type="checkbox" class="compare-checkbox" data-product="tmm2000">
+                    </div>
+                    <div class="text-sm text-gray-400 mb-4">全国产PTP模块</div>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">PTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">±50ns</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">NTP授时精度</span>
+                            <span class="text-yellow-400 font-medium">≤1ms</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">尺寸</span>
+                            <span class="text-yellow-400 font-medium">70×70×16mm</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">国产化</span>
+                            <span class="text-yellow-400 font-medium">100%全国产</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black py-2 px-4 rounded text-sm font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                            立即咨询
+                        </button>
+                        <button class="px-4 py-2 border border-gray-600 text-gray-300 hover:bg-gray-800 rounded text-sm transition-colors">
+                            详情
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Modal -->
+    <div id="comparison-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-gray-900 rounded-lg p-8 max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto border border-gray-700">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold">产品参数对比</h3>
+                <button onclick="closeComparisonModal()" class="text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="comparison-table-container">
+                <!-- 对比表格将在这里生成 -->
+            </div>
+            
+            <div class="mt-6 flex justify-center space-x-4">
+                <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg font-medium transition-colors" onclick="TaimingTech.showContactModal()">
+                    咨询选型建议
+                </button>
+                <button class="border border-gray-600 text-gray-300 hover:bg-gray-800 px-6 py-2 rounded-lg font-medium transition-colors" onclick="closeComparisonModal()">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                            <span class="text-black font-bold text-lg">T</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-serif font-bold">太铭科技</h3>
+                            <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        专注于高精度时频技术，为关键基础设施提供精准时间同步解决方案。
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">产品中心</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#clock-modules" class="hover:text-white">时钟模块系列</a></li>
+                        <li><a href="#irig-b" class="hover:text-white">IRIG-B编解码</a></li>
+                        <li><a href="#network-sync" class="hover:text-white">网络同步模块</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">解决方案</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="solutions.html#5g" class="hover:text-white">5G通信网络</a></li>
+                        <li><a href="solutions.html#defense" class="hover:text-white">国防军工</a></li>
+                        <li><a href="solutions.html#datacenter" class="hover:text-white">数据中心</a></li>
+                        <li><a href="solutions.html#power" class="hover:text-white">智能电网</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>电话: 400-888-8888</li>
+                        <li>邮箱: info@taiming.com</li>
+                        <li>地址: 北京市海淀区中关村</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 太铭科技. 保留所有权利. | 京ICP备12345678号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    <script src="products.js"></script>
+</body>
+</html>
