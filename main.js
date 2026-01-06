@@ -396,7 +396,7 @@ function showContactModal() {
                     </div>
                     <div>
                         <div class="font-medium">技术支持热线</div>
-                        <div class="text-gray-400">400-888-8888</div>
+                        <div class="text-gray-400">180-3811-8432</div>
                     </div>
                 </div>
                 
@@ -408,7 +408,7 @@ function showContactModal() {
                     </div>
                     <div>
                         <div class="font-medium">邮箱咨询</div>
-                        <div class="text-gray-400">info@taiming.com</div>
+                        <div class="text-gray-400">whh@tifreq.com</div>
                     </div>
                 </div>
                 
@@ -421,7 +421,7 @@ function showContactModal() {
                     </div>
                     <div>
                         <div class="font-medium">公司地址</div>
-                        <div class="text-gray-400">北京市海淀区中关村科技园</div>
+                        <div class="text-gray-400">深圳市宝安区</div>
                     </div>
                 </div>
             </div>

@@ -238,9 +238,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
-                        <span class="text-black font-bold text-lg">T</span>
-                    </div>
+                    <img src="太铭logo.png" alt="太铭科技 Logo" class="w-10 h-10">
                     <div>
                         <h1 class="text-xl font-serif font-bold text-white">太铭科技</h1>
                         <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
@@ -298,10 +296,11 @@
             
             <div class="grid lg:grid-cols-3 gap-8">
                 <!-- Network Topology -->
-                <div class="lg:col-span-2">
+                <div class="lg:col-span-3">
                     <div class="scenario-simulator p-6 relative" id="network-topology">
                         <!-- 网络节点将通过JavaScript动态生成 -->
-                        <div class="text-center text-gray-400 absolute inset-0 flex items-center justify-center">
+                        <!-- 加载提示将被JavaScript隐藏 -->
+                        <div class="text-center text-gray-400 absolute inset-0 flex items-center justify-center" style="display: none;">
                             <div>
                                 <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
@@ -312,49 +311,9 @@
                     </div>
                 </div>
                 
-                <!-- Performance Dashboard -->
-                <div class="space-y-6">
-                    <div class="performance-dashboard p-6">
-                        <h3 class="text-xl font-bold mb-6">实时性能监控</h3>
-                        
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center">
-                                <div class="metric-gauge" id="sync-precision-gauge"></div>
-                                <div class="text-sm text-gray-400 mt-2">同步精度</div>
-                                <div class="text-lg font-bold text-yellow-400" id="sync-precision-value">±10ns</div>
-                            </div>
-                            
-                            <div class="text-center">
-                                <div class="metric-gauge" id="network-delay-gauge"></div>
-                                <div class="text-sm text-gray-400 mt-2">网络延迟</div>
-                                <div class="text-lg font-bold text-green-400" id="network-delay-value"><1ms</div>
-                            </div>
-                            
-                            <div class="text-center">
-                                <div class="metric-gauge" id="availability-gauge"></div>
-                                <div class="text-sm text-gray-400 mt-2">可用性</div>
-                                <div class="text-lg font-bold text-blue-400" id="availability-value">99.99%</div>
-                            </div>
-                            
-                            <div class="text-center">
-                                <div class="metric-gauge" id="temperature-gauge"></div>
-                                <div class="text-sm text-gray-400 mt-2">工作温度</div>
-                                <div class="text-lg font-bold text-purple-400" id="temperature-value">25°C</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Node Info Panel -->
-                    <div class="glass-card p-6" id="node-info-panel">
-                        <h3 class="text-lg font-bold mb-4">节点信息</h3>
-                        <div class="text-center text-gray-400 py-8">
-                            <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <p>点击网络节点查看详细信息</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Performance Dashboard and Node Info Panel removed -->
+                <!-- Right panel removed, network topology will expand to fill space -->
+                
             </div>
         </div>
     </section>
@@ -741,9 +700,7 @@
             <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
-                            <span class="text-black font-bold text-lg">T</span>
-                        </div>
+                        <img src="太铭logo.png" alt="太铭科技 Logo" class="w-10 h-10">
                         <div>
                             <h3 class="text-xl font-serif font-bold">太铭科技</h3>
                             <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
@@ -776,15 +733,15 @@
                 <div>
                     <h4 class="font-bold mb-4">联系我们</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>电话: 400-888-8888</li>
-                        <li>邮箱: info@taiming.com</li>
-                        <li>地址: 北京市海淀区中关村</li>
+                        <li>电话: 180-3811-8432</li>
+                        <li>邮箱: whh@tifreq.com</li>
+                        <li>地址: 深圳市宝安区</li>
                     </ul>
                 </div>
             </div>
             
             <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 太鸣科技. 保留所有权利. | 京ICP备12345678号</p>
+                <p>&copy; 2025 太铭科技. 保留所有权利.</p>
             </div>
         </div>
     </footer>

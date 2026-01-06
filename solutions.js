@@ -162,7 +162,16 @@ function initScenarioSelector() {
 // 初始化网络拓扑
 function initNetworkTopology() {
     const container = document.getElementById('network-topology');
-    if (!container) return;
+    if (!container) {
+        console.error('Network topology container not found');
+        return;
+    }
+    
+    // 立即隐藏加载提示
+    const loadingElement = container.querySelector('.text-center.text-gray-400');
+    if (loadingElement) {
+        loadingElement.style.display = 'none';
+    }
     
     // 创建p5.js画布
     topologySketch = new p5(function(p) {
@@ -171,7 +180,10 @@ function initNetworkTopology() {
         let selectedNode = null;
         
         p.setup = function() {
-            const canvas = p.createCanvas(container.offsetWidth - 48, 500);
+            // 现在网络拓扑图可以使用全部宽度
+            const width = container.offsetWidth - 48;
+            const height = Math.max(500, window.innerHeight * 0.6);
+            const canvas = p.createCanvas(width, height);
             canvas.parent(container);
             
             // 初始化网络拓扑
@@ -241,13 +253,15 @@ function initNetworkTopology() {
                 const distance = p.dist(p.mouseX, p.mouseY, node.x, node.y);
                 if (distance < 30) {
                     selectedNode = node;
-                    showNodeInfo(node);
+                    // 不再显示节点信息，因为面板已删除
                 }
             });
         };
         
         p.windowResized = function() {
-            p.resizeCanvas(container.offsetWidth - 48, 500);
+            const width = container.offsetWidth - 48;
+            const height = Math.max(500, window.innerHeight * 0.6);
+            p.resizeCanvas(width, height);
         };
         
         // 更新网络拓扑
@@ -264,8 +278,7 @@ function initNetworkTopology() {
             connections = config.connections;
             selectedNode = null;
             
-            // 清空节点信息面板
-            clearNodeInfoPanel();
+            // 不再需要清空节点信息面板，因为已删除
         }
         
         // 暴露更新函数
