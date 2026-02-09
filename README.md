@@ -44,7 +44,7 @@ timingtech-static/
 ├── pdf/                    # 规格书PDF文件夹
 │   ├── TM22_datasheet.pdf
 │   ├── TM45_datasheet.pdf
-│   ├── TMMM33B_datasheet.pdf
+│   ├── TM33B_datasheet.pdf
 │   ├── TMM4733_datasheet.pdf
 │   ├── TMM4330_datasheet.pdf
 │   ├── TMM7046_datasheet.pdf
@@ -53,7 +53,7 @@ timingtech-static/
 └── products/               # 产品详情页面
     ├── tm22.html
     ├── tm45.html
-    ├── tmmm33b.html
+    ├── tm33b.html
     ├── tmm4733.html
     ├── tmm4330.html
     ├── tmm7046.html
@@ -164,9 +164,9 @@ server {
 ## 联系方式
 
 - 电话：180 3811 8432
-- 邮箱：sales@timingtech.com
-- 地址：深圳市南山区科技园
+- 邮箱：whh@tifreq.com
+- 地址：深圳市宝安区
 
 ---
 
-© 2024 太铭科技. All rights reserved.
+© 2026 太铭科技. All rights reserved.

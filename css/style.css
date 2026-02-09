@@ -183,6 +183,12 @@ body {
     color: var(--gold);
 }
 
+.logo-image {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+}
+
 .logo-text {
     display: flex;
     flex-direction: column;

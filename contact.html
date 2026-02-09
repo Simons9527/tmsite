@@ -13,7 +13,7 @@
     <nav class="navbar scrolled">
         <div class="container">
             <a href="./index.html" class="logo">
-                <div class="logo-icon">T</div>
+                <img src="./images/logo.png" alt="太铭科技" class="logo-image">
                 <div class="logo-text">
                     <span class="logo-name">太铭科技</span>
                     <span class="logo-sub">TIMING TECH</span>
@@ -67,7 +67,7 @@
                         <div class="contact-content">
                             <h4>电话咨询</h4>
                             <p class="contact-value">180 3811 8432</p>
-                            <p class="contact-sub">吴浩浩 | 联合创始人</p>
+                            <p class="contact-sub">吴经理</p>
                         </div>
                     </div>
                     
@@ -75,7 +75,7 @@
                         <div class="contact-icon"><i class="ri-mail-line"></i></div>
                         <div class="contact-content">
                             <h4>邮件联系</h4>
-                            <p style="color: #ccc;">sales@timingtech.com</p>
+                            <p style="color: #ccc;">whh@tifreq.com</p>
                             <p class="contact-sub">工作日24小时内回复</p>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                         <div class="contact-icon"><i class="ri-map-pin-line"></i></div>
                         <div class="contact-content">
                             <h4>公司地址</h4>
-                            <p style="color: #ccc;">深圳市南山区科技园</p>
+                            <p style="color: #ccc;">深圳市宝安区</p>
                             <p class="contact-sub">欢迎预约参观</p>
                         </div>
                     </div>
@@ -110,55 +110,43 @@
                         <p style="font-size: 13px; color: #aaa; margin-bottom: 6px;">周一至周五：9:00 - 18:00</p>
                         <p style="font-size: 13px; color: #aaa;">紧急咨询：24小时响应</p>
                     </div>
-                </div>
-                
-                <!-- 联系表单 -->
-                <div class="contact-form">
-                    <h3>在线咨询</h3>
-                    <form id="contactForm">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>姓名 <span class="required">*</span></label>
-                                <input type="text" name="name" class="form-control" placeholder="您的姓名" required>
+                    
+                    <!-- 合作优势 -->
+                    <div style="margin-top: 30px; padding: 25px; border: 1px solid rgba(208,168,92,0.3); border-radius: 8px; background: linear-gradient(135deg, rgba(34,34,34,0.7) 0%, rgba(0,0,0,0.7) 100%);">
+                        <h4 style="font-family: var(--font-display); font-size: 16px; margin-bottom: 16px; color: #d0a85c;">
+                            <i class="ri-award-line"></i> 合作优势
+                        </h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="ri-check-line" style="color: #51cf66; margin-top: 3px;"></i>
+                                <div>
+                                    <p style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;">技术实力雄厚</p>
+                                    <p style="font-size: 12px; color: #aaa;">20+年行业经验，34项核心知识产权</p>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>公司</label>
-                                <input type="text" name="company" class="form-control" placeholder="公司名称">
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="ri-check-line" style="color: #51cf66; margin-top: 3px;"></i>
+                                <div>
+                                    <p style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;">服务响应迅速</p>
+                                    <p style="font-size: 12px; color: #aaa;">24小时快速响应，专业技术支持</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="ri-check-line" style="color: #51cf66; margin-top: 3px;"></i>
+                                <div>
+                                    <p style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;">定制化能力强</p>
+                                    <p style="font-size: 12px; color: #aaa;">深度定制开发，满足特殊需求</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <i class="ri-check-line" style="color: #51cf66; margin-top: 3px;"></i>
+                                <div>
+                                    <p style="font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 4px;">品质保障完善</p>
+                                    <p style="font-size: 12px; color: #aaa;">军工级可靠性，全程质量跟踪</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>电话 <span class="required">*</span></label>
-                                <input type="tel" name="phone" class="form-control" placeholder="联系电话" required>
-                            </div>
-                            <div class="form-group">
-                                <label>邮箱</label>
-                                <input type="email" name="email" class="form-control" placeholder="电子邮箱">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>感兴趣的产品</label>
-                            <select name="product" class="form-control" style="background-color: rgba(0,0,0,0.5);">
-                                <option value="">请选择产品</option>
-                                <option value="tm22">TM22 - 紧凑型守时模块</option>
-                                <option value="tm45">TM45 - 高性能守时模块</option>
-                                <option value="tmmm33b">TMMM33B - IRIG-B编解码</option>
-                                <option value="tmm4733">TMM4733 - 高精度PTP模块</option>
-                                <option value="tmm4330">TMM4330 - 表贴式PTP模块</option>
-                                <option value="tmm7046">TMM7046 - 全国产100MHz</option>
-                                <option value="other">其他/定制化需求</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>需求描述</label>
-                            <textarea name="message" class="form-control" rows="4" placeholder="请描述您的需求，如应用场景、精度要求、数量等..."></textarea>
-                        </div>
-                        <button type="submit" class="form-submit">
-                            <i class="ri-send-plane-line"></i>
-                            提交咨询
-                        </button>
-                        <p class="form-note">提交即表示您同意我们的隐私政策，我们承诺保护您的信息安全</p>
-                    </form>
+                    </div>
                 </div>
                 
             </div>
@@ -168,19 +156,12 @@
     <!-- 快速链接 -->
     <section class="section" style="background: linear-gradient(to bottom, #000, #111); padding: 60px 0;">
         <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
                 <a href="./products.html" style="text-decoration: none;">
                     <div style="padding: 30px; border: 1px solid rgba(208,168,92,0.2); border-radius: 8px; text-align: center; transition: all 0.3s;" onmouseover="this.style.borderColor='rgba(208,168,92,0.5)'" onmouseout="this.style.borderColor='rgba(208,168,92,0.2)'">
                         <i class="ri-cpu-line" style="font-size: 40px; color: #d0a85c; margin-bottom: 16px;"></i>
                         <h4 style="font-family: var(--font-display); color: #fff; margin-bottom: 8px;">浏览产品</h4>
                         <p style="font-size: 13px; color: #888;">查看完整产品线和规格参数</p>
-                    </div>
-                </a>
-                <a href="./downloads.html" style="text-decoration: none;">
-                    <div style="padding: 30px; border: 1px solid rgba(208,168,92,0.2); border-radius: 8px; text-align: center; transition: all 0.3s;" onmouseover="this.style.borderColor='rgba(208,168,92,0.5)'" onmouseout="this.style.borderColor='rgba(208,168,92,0.2)'">
-                        <i class="ri-download-line" style="font-size: 40px; color: #d0a85c; margin-bottom: 16px;"></i>
-                        <h4 style="font-family: var(--font-display); color: #fff; margin-bottom: 8px;">下载资料</h4>
-                        <p style="font-size: 13px; color: #888;">获取产品规格书和技术文档</p>
                     </div>
                 </a>
                 <a href="./cases.html" style="text-decoration: none;">
@@ -201,7 +182,7 @@
                 <div class="footer-grid">
                     <div class="footer-brand">
                         <a href="./index.html" class="logo">
-                            <div class="logo-icon">T</div>
+                            <img src="./images/logo.png" alt="太铭科技" class="logo-image">
                             <div class="logo-text">
                                 <span class="logo-name">太铭科技</span>
                                 <span class="logo-sub">TIMING TECHNOLOGY</span>
@@ -210,7 +191,7 @@
                         <p>精密时频与射频模组提供商</p>
                         <ul class="footer-contact">
                             <li><i class="ri-phone-line"></i> <span>180 3811 8432</span></li>
-                            <li><i class="ri-mail-line"></i> <span>sales@timingtech.com</span></li>
+                            <li><i class="ri-mail-line"></i> <span>whh@tifreq.com</span></li>
                         </ul>
                     </div>
                     <div>
@@ -243,7 +224,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="footer-bottom-content">
-                    <p class="footer-copyright">© 2024 太铭科技. All rights reserved.</p>
+                    <p class="footer-copyright">© 2026 太铭科技. All rights reserved.</p>
                     <div class="footer-badges">
                         <span class="footer-badge">GJB9001C-2017 认证</span>
                         <span class="footer-badge">国家高新技术企业</span>
