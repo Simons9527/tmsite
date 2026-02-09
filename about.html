@@ -3,523 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="关于太铭科技 - 精密时频与射频模组提供商，拥有34项核心知识产权，100%全国产自主可控。">
     <title>关于我们 - 太铭科技</title>
-    <meta name="description" content="了解太铭科技的公司介绍、技术优势、发展历程和企业文化，我们是专注于高精度时频技术的领先企业。">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Core Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    
-    <style>
-        :root {
-            --primary-dark: #1a2332;
-            --secondary-gray: #8892a0;
-            --accent-gold: #e6b35a;
-            --bg-dark: #0f1419;
-            --text-light: #e1e8ef;
-            --text-gray: #8892a0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Noto Sans SC', sans-serif;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
-            color: var(--text-light);
-            overflow-x: hidden;
-        }
-        
-        .font-serif {
-            font-family: 'Noto Serif SC', serif;
-        }
-        
-        /* Navigation */
-        .nav-blur {
-            backdrop-filter: blur(20px);
-            background: rgba(15, 20, 25, 0.8);
-            border-bottom: 1px solid rgba(136, 146, 160, 0.1);
-        }
-        
-        /* Glass Effect */
-        .glass-card {
-            background: rgba(26, 35, 50, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(136, 146, 160, 0.1);
-            border-radius: 16px;
-        }
-        
-        /* Hover Effects */
-        .hover-lift {
-            transition: all 0.3s ease;
-        }
-        
-        .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Tech Grid Background */
-        .tech-grid {
-            background-image: 
-                linear-gradient(rgba(136, 146, 160, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(136, 146, 160, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        
-        /* Timeline */
-        .timeline {
-            position: relative;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-gold), transparent);
-            transform: translateX(-50%);
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 3rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 2rem;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-gold);
-            border-radius: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-        
-        .timeline-content {
-            width: 45%;
-            padding: 2rem;
-            background: rgba(26, 35, 50, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(136, 146, 160, 0.1);
-            border-radius: 16px;
-        }
-        
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: auto;
-        }
-        
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-right: auto;
-        }
-        
-        /* Team Cards */
-        .team-card {
-            background: rgba(26, 35, 50, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(136, 146, 160, 0.1);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .team-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(230, 179, 90, 0.3);
-        }
-        
-        /* Stats Counter */
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--accent-gold), #d4a04a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Contact Form */
-        .contact-form {
-            background: rgba(26, 35, 50, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(136, 146, 160, 0.2);
-            border-radius: 20px;
-        }
-        
-        .form-input,
-        .form-textarea {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(26, 35, 50, 0.6);
-            border: 1px solid rgba(136, 146, 160, 0.3);
-            border-radius: 8px;
-            color: var(--text-light);
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 0 3px rgba(230, 179, 90, 0.1);
-        }
-        
-        /* Map Container */
-        .map-container {
-            background: rgba(26, 35, 50, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(136, 146, 160, 0.1);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body class="tech-grid">
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex items-center space-x-3">
-                   <img src="太铭logo.png" alt="太铭科技 Logo" class="w-10 h-10">
-                   <div>
-                        <h1 class="text-xl font-serif font-bold text-white">太铭科技</h1>
-                       <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
-                   </div>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar scrolled">
+        <div class="container">
+            <a href="./index.html" class="logo">
+                <div class="logo-icon">T</div>
+                <div class="logo-text">
+                    <span class="logo-name">太铭科技</span>
+                    <span class="logo-sub">TIMING TECH</span>
                 </div>
-
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-gray-300 hover:text-white transition-colors">首页</a>
-                    <a href="products.html" class="text-gray-300 hover:text-white transition-colors">产品中心</a>
-                    <a href="solutions.html" class="text-gray-300 hover:text-white transition-colors">解决方案</a>
-                    <a href="about.html" class="text-white font-medium border-b-2 border-yellow-400 pb-1">关于我们</a>
-                    <button class="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-2 rounded-lg font-medium transition-colors" onclick="TaimingTech.showContactModal()">
-                        联系咨询
-                    </button>
-                </div>
-                
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-white" id="mobile-menu-btn">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="./index.html">首页</a></li>
+                <li><a href="./about.html" class="active">关于我们</a></li>
+                <li><a href="./products.html">产品中心</a></li>
+                <li><a href="./solutions.html">解决方案</a></li>
+                <li><a href="./cases.html">成功案例</a></li>
+                <li><a href="./contact.html">联系我们</a></li>
+            </ul>
+            <a href="./contact.html" class="btn btn-primary btn-small nav-cta">免费咨询</a>
+            <button class="mobile-menu-btn"><i class="ri-menu-line"></i></button>
         </div>
     </nav>
-
-    <!-- Page Header -->
-    <section class="pt-24 pb-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-6">关于太铭科技</h1>
-            <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                专注于高精度时频技术，为关键基础设施提供精准时间同步解决方案的领先企业
-            </p>
-        </div>
-    </section>
-
-    <!-- Company Introduction -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-6">公司简介</h2>
-                    <div class="space-y-6 text-lg text-gray-300">
-                        <p>
-                            太铭科技成立于2016年，是一家专注于高精度时频技术研发与应用的高新技术企业。公司总部位于深圳，拥有一支由时频技术专家、芯片设计工程师和系统架构师组成的专业团队。
-                        </p>
-                        <p>
-                            我们致力于为5G通信、国防军工、数据中心、智能电网等关键基础设施领域提供高精度、高可靠性的时频同步解决方案。公司产品涵盖时钟模块、IRIG-B编解码模块、网络同步模块等全系列产品。
-                        </p>
-                        <p>
-                            太铭科技坚持自主创新，从芯片到软件完全自主研发，符合国家时频设备国产化战略。我们的产品以±10ns授时精度、-55℃~105℃宽温工作范围、0.5W超低功耗等核心优势，在行业内建立了良好的品牌声誉。
-                        </p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-6 mt-8">
-                        <div class="text-center">
-                            <div class="stat-number" id="company-years">10</div>
-                            <div class="text-gray-400">年发展历程</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="stat-number" id="team-size">20+</div>
-                            <div class="text-gray-400">专业技术团队</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="glass-card p-8">
-                    <h3 class="text-2xl font-bold mb-6">核心价值</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-2">精准</h4>
-                                <p class="text-gray-400">±10ns授时精度，确保时频信号准确无误</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-2">可靠</h4>
-                                <p class="text-gray-400">-55℃~105℃宽温工作，适应各种恶劣环境</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-2">创新</h4>
-                                <p class="text-gray-400">从芯片到软件完全自主研发，持续技术创新</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-2">服务</h4>
-                                <p class="text-gray-400">7×24小时技术支持，快速响应客户需求</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    
+    <div class="mobile-menu">
+        <a href="./index.html">首页</a>
+        <a href="./about.html">关于我们</a>
+        <a href="./products.html">产品中心</a>
+        <a href="./solutions.html">解决方案</a>
+        <a href="./cases.html">成功案例</a>
+        <a href="./contact.html">联系我们</a>
+    </div>
+    
+    <!-- 页面标题 -->
+    <section class="section" style="padding-top: 120px; padding-bottom: 60px;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">ABOUT US</span>
+                <h2 class="section-title">关于<span class="text-gold">太铭</span></h2>
+                <p class="section-subtitle">精准同步未来</p>
             </div>
         </div>
     </section>
-
-    <!-- Company Stats -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">企业实力</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    用数据说话，以实力证明我们在时频技术领域的领先地位
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="glass-card p-8 text-center hover-lift">
-                    <div class="stat-number" id="stat-precision">±10ns</div>
-                    <div class="text-gray-400 mt-2">最高授时精度</div>
+    
+    <!-- 公司介绍 -->
+    <section class="section" style="padding-top: 0;">
+        <div class="grid-pattern" style="position: absolute; inset: 0; opacity: 0.3;"></div>
+        <div class="container" style="position: relative; z-index: 1;">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="./images/about-product.jpg" alt="精密时频模块">
                 </div>
-                
-                <div class="glass-card p-8 text-center hover-lift">
-                    <div class="stat-number" id="stat-temperature">160</div>
-                    <div class="text-gray-400 mt-2">宽温工作范围(℃)</div>
-                </div>
-                
-                <div class="glass-card p-8 text-center hover-lift">
-                    <div class="stat-number" id="stat-products">10+</div>
-                    <div class="text-gray-400 mt-2">产品型号</div>
-                </div>
-                
-                <div class="glass-card p-8 text-center hover-lift">
-                    <div class="stat-number" id="stat-localization">100</div>
-                    <div class="text-gray-400 mt-2">国产化率(%)</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Development History -->
-    <section class="py-20">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">发展历程</h2>
-                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
-                    从创立到现在，我们始终专注于时频技术的创新与发展
-                </p>
-            </div>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2016</div>
-                            <h3 class="text-xl font-bold">公司成立</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            太铭科技在深圳成立，专注于高精度时频技术研发，组建核心技术团队。
-                        </p>
+                <div class="about-content">
+                    <h3>精密时频与射频模组<span class="text-gold">领导者</span></h3>
+                    <p>太铭科技是一家专注于精密时频与射频模组研发、生产和销售的高新技术企业。我们服务于国防科技、通信导航与高端工业领域，致力于为客户提供高性能、高可靠性的时频同步解决方案。</p>
+                    <p>我们已累积34项核心知识产权，产品实现100%全国产自主可控。</p>
+                    <div class="about-features">
+                        <div class="about-feature">纳秒级授时精度</div>
+                        <div class="about-feature">100%全国产</div>
+                        <div class="about-feature">宽温工作范围</div>
+                        <div class="about-feature">军工级可靠性</div>
                     </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2017</div>
-                            <h3 class="text-xl font-bold">首款产品发布</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            推出TM22紧凑型时钟模块，实现±15ns授时精度，获得首批客户认可。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2018</div>
-                            <h3 class="text-xl font-bold">技术突破</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            成功研发TM45高性能时钟模块，保持能力达到1.5μs/24hrs，技术性能达到国际先进水平。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2019</div>
-                            <h3 class="text-xl font-bold">产品线扩展</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            推出IRIG-B编解码模块和网络同步模块，形成完整的时频产品矩阵。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2020</div>
-                            <h3 class="text-xl font-bold">市场拓展</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            成功进入5G通信和数据中心市场，与多家知名企业建立合作关系。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2021</div>
-                            <h3 class="text-xl font-bold">国产化突破</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            推出TM33B全国产编解码模块，实现100%自主可控，通过军工级认证。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2023</div>
-                            <h3 class="text-xl font-bold">行业领先</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            成为国内时频技术领域的领先企业，产品广泛应用于关键基础设施领域。
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold text-yellow-400 mr-4">2025</div>
-                            <h3 class="text-xl font-bold">未来展望</h3>
-                        </div>
-                        <p class="text-gray-300">
-                            持续技术创新，拓展国际市场，致力于成为全球领先的时频技术解决方案提供商。
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="太铭logo.png" alt="太铭科技 Logo" class="w-10 h-10">
-                        <div>
-                            <h3 class="text-xl font-serif font-bold">太铭科技</h3>
-                            <p class="text-xs text-gray-400">TIME & FREQUENCY</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        专注于高精度时频技术，为关键基础设施提供精准时间同步解决方案。
-                    </p>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">产品中心</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="products.html#clock-modules" class="hover:text-white">时钟模块系列</a></li>
-                        <li><a href="products.html#irig-b" class="hover:text-white">IRIG-B编解码</a></li>
-                        <li><a href="products.html#network-sync" class="hover:text-white">网络同步模块</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">解决方案</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="solutions.html#5g" class="hover:text-white">5G通信网络</a></li>
-                        <li><a href="solutions.html#defense" class="hover:text-white">国防军工</a></li>
-                        <li><a href="solutions.html#datacenter" class="hover:text-white">数据中心</a></li>
-                        <li><a href="solutions.html#power" class="hover:text-white">智能电网</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-bold mb-4">联系我们</h4>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li>电话: 180-3811-8432</li>
-                        <li>邮箱: whh@tifreq.com</li>
-                        <li>地址: 深圳市宝安区</li>
-                    </ul>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 太铭科技. 保留所有权利. </p>
+            <!-- 知识产权统计 -->
+            <div class="stats-grid" style="margin-top: 80px;">
+                <div class="stat-card">
+                    <div class="stat-card-value">34<span class="stat-card-suffix">项</span></div>
+                    <div class="stat-card-label">核心知识产权</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value">12<span class="stat-card-suffix">项</span></div>
+                    <div class="stat-card-label">专利</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value">2<span class="stat-card-suffix">项</span></div>
+                    <div class="stat-card-label">集成电路布图</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-value">18<span class="stat-card-suffix">项</span></div>
+                    <div class="stat-card-label">软件著作权</div>
+                </div>
+            </div>
+            
+            <!-- 资质认证 -->
+            <div class="qualifications" style="margin-top: 80px;">
+                <h3 style="text-align: center; font-family: var(--font-display); font-size: 28px; margin-bottom: 40px;">
+                    权威认证与<span class="text-gold">资质</span>
+                </h3>
+                <div class="qual-grid">
+                    <div class="qual-item">
+                        <div class="qual-icon"><i class="ri-shield-check-line"></i></div>
+                        <div class="qual-content">
+                            <h4>GJB9001C-2017</h4>
+                            <p>武器装备质量管理体系</p>
+                            <span class="qual-year">2018年通过</span>
+                        </div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-icon"><i class="ri-award-line"></i></div>
+                        <div class="qual-content">
+                            <h4>产学研合作</h4>
+                            <p>中科院、中船重工701</p>
+                            <span class="qual-year">2019年建立</span>
+                        </div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-icon"><i class="ri-file-list-3-line"></i></div>
+                        <div class="qual-content">
+                            <h4>双软认证</h4>
+                            <p>软件企业+软件产品</p>
+                            <span class="qual-year">2019年通过</span>
+                        </div>
+                    </div>
+                    <div class="qual-item">
+                        <div class="qual-icon"><i class="ri-cpu-line"></i></div>
+                        <div class="qual-content">
+                            <h4>国家高新技术企业</h4>
+                            <p>国家级认定</p>
+                            <span class="qual-year">2021年认定</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="./index.html" class="logo">
+                            <div class="logo-icon">T</div>
+                            <div class="logo-text">
+                                <span class="logo-name">太铭科技</span>
+                                <span class="logo-sub">TIMING TECHNOLOGY</span>
+                            </div>
+                        </a>
+                        <p>精密时频与射频模组提供商</p>
+                        <ul class="footer-contact">
+                            <li><i class="ri-phone-line"></i> <span>180 3811 8432</span></li>
+                            <li><i class="ri-mail-line"></i> <span>sales@timingtech.com</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">产品中心</h4>
+                        <ul class="footer-links">
+                            <li><a href="./products.html">守时模块系列</a></li>
+                            <li><a href="./products.html">IRIG-B编解码</a></li>
+                            <li><a href="./products.html">网络授时模块</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">解决方案</h4>
+                        <ul class="footer-links">
+                            <li><a href="./solutions.html">高精度授时</a></li>
+                            <li><a href="./solutions.html">协议兼容</a></li>
+                            <li><a href="./solutions.html">射频与芯片</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="footer-title">关于公司</h4>
+                        <ul class="footer-links">
+                            <li><a href="./about.html">关于我们</a></li>
+                            <li><a href="./cases.html">成功案例</a></li>
+                            <li><a href="./contact.html">联系我们</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p class="footer-copyright">© 2024 太铭科技. All rights reserved.</p>
+                    <div class="footer-badges">
+                        <span class="footer-badge">GJB9001C-2017 认证</span>
+                        <span class="footer-badge">国家高新技术企业</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-slogan">
+            <div class="container">
+                <p>Timing the Future · 精准同步未来</p>
             </div>
         </div>
     </footer>
-
-    <!-- JavaScript -->
-    <script src="main.js"></script>
+    
+    <script src="./js/main.js"></script>
 </body>
 </html>
