@@ -48,7 +48,7 @@ timingtech-static/
 │   ├── TMM4733_datasheet.pdf
 │   ├── TMM4330_datasheet.pdf
 │   ├── TMM7046_datasheet.pdf
-│   ├── TM2000_datasheet.pdf
+│   ├── TMM2000_datasheet.pdf
 │   └── TM3000_datasheet.pdf
 └── products/               # 产品详情页面
     ├── tm22.html
@@ -57,7 +57,7 @@ timingtech-static/
     ├── tmm4733.html
     ├── tmm4330.html
     ├── tmm7046.html
-    ├── tm2000.html
+    ├── tmm2000.html
     └── tm3000.html
 ```
 
